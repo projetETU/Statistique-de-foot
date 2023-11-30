@@ -49,13 +49,18 @@ fetch('https://itu.alwaysdata.net/generals')
        const th = document.createElement('th');
        th.textContent = titre;
        tr.appendChild(th); 
-       const body = document.querySelector('#data');
+
+
+
+       
+    });
+    const body = document.querySelector('#data');
     let out = "";
     for(let datas of data)
     {
       out += `
         <tr>
-          <td>${datas.titre}</td>
+          <td>${datas.Equipe}</td>
           <td>${datas.Competitions}</td>
           <td>${datas.But}</td>
           <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
@@ -68,7 +73,6 @@ fetch('https://itu.alwaysdata.net/generals')
         </tr>
       `;
     }
-    });
     body.innerHTML = out;
     head.appendChild(tr);
     
