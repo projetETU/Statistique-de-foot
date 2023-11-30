@@ -38,21 +38,17 @@
     </div>
   </div>
   <script>
-fetch('https://itu.alwaysdata.net/generals')
+    function fetch(url) {
+      fetch('https://itu.alwaysdata.net/generals')
   .then(response => response.json())
   .then(data => {
     const table = document.getElementById("table");
     const head = table.querySelector('thead');
     const tr = document.createElement("tr");
-
     Object.keys(data[0]).forEach(titre => {
        const th = document.createElement('th');
        th.textContent = titre;
-       tr.appendChild(th); 
-
-
-
-       
+       tr.appendChild(th);    
     });
     const body = document.querySelector('#data');
     let out = "";
@@ -75,14 +71,12 @@ fetch('https://itu.alwaysdata.net/generals')
     }
     body.innerHTML = out;
     head.appendChild(tr);
-    
-
   })
   .catch(error => {
     console.error('Erreur lors de la récupération des données :', error);
   });
-
-
+ 
+    }
   </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
