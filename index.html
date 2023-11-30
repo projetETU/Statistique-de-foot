@@ -38,45 +38,48 @@
     </div>
   </div>
   <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetchData();
+
     function fetchData(url = 'https://itu.alwaysdata.net/generals') {
       fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    const table = document.getElementById("table");
-    const head = table.querySelector('thead');
-    const tr = document.createElement("tr");
-    Object.keys(data[0]).forEach(titre => {
-       const th = document.createElement('th');
-       th.textContent = titre;
-       tr.appendChild(th);    
-    });
-    const body = document.querySelector('#data');
-    let out = "";
-    for(let datas of data)
-    {
-      out += `
-        <tr>
-          <td>${datas.Equipe}</td>
-          <td>${datas.Competitions}</td>
-          <td>${datas.But}</td>
-          <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
-          <td><button class='btn btn-danger'disabled>${datas.Rouge}</button></td>
-          <td>${datas.Possession} %</td>
-          <td>${datas.PasseReussi} %</td>
-          <td>${datas.AerienGagner}</td>
-          <td>${datas.Note}</td>
-
-        </tr>
-      `;
+        .then(response => response.json())
+        .then(data => {
+          const table = document.getElementById("table");
+          const head = table.querySelector('thead');
+          const tr = document.createElement("tr");
+          Object.keys(data[0]).forEach(titre => {
+            const th = document.createElement('th');
+            th.textContent = titre;
+            tr.appendChild(th);
+          });
+          const body = document.querySelector('#data');
+          let out = "";
+          for (let datas of data) {
+            out += `
+              <tr>
+                <td>${datas.Equipe}</td>
+                <td>${datas.Competitions}</td>
+                <td>${datas.But}</td>
+                <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
+                <td><button class='btn btn-danger'disabled>${datas.Rouge}</button></td>
+                <td>${datas.Possession} %</td>
+                <td>${datas.PasseReussi} %</td>
+                <td>${datas.AerienGagner}</td>
+                <td>${datas.Note}</td>
+              </tr>
+            `;
+          }
+          body.innerHTML = out;
+          head.appendChild(tr);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des données :', error);
+        });
     }
-    body.innerHTML = out;
-    head.appendChild(tr);
-  })
-  .catch(error => {
-    console.error('Erreur lors de la récupération des données :', error);
   });
-    }
-    fetchData();
+</script>
+
   </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
