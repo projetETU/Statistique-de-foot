@@ -57,8 +57,8 @@ CREATE TABLE defense(
         faute INT ,
         horsJeux INT ,
         note INT,
-        id_lieu INT
-            FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
+        id_lieu INT,
+    FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
     FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
     FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
 );
