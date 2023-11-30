@@ -38,7 +38,7 @@
     </div>
   </div>
   <script>
-    function fetch(url = 'https://itu.alwaysdata.net/generals') {
+    function fetchData(url = 'https://itu.alwaysdata.net/generals') {
       fetch(url)
   .then(response => response.json())
   .then(data => {
@@ -76,7 +76,7 @@
     console.error('Erreur lors de la récupération des données :', error);
   });
     }
-    fetch();
+    fetchData();
   </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
