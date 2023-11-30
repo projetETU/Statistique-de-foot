@@ -47,6 +47,26 @@ INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,p
 INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,3,2,4,1,54,43,12,1,6);
 INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,4,1,3,0,46,61,12,2,5);
 
+CREATE TABLE defense(
+        id_defense INT AUTO_INCREMENT PRIMARY KEY,
+        id_match INT ,
+        id_equipe INT,
+        id_competition INT ,
+        tirspm INT ,
+        tacle INT ,
+        faute INT ,
+        horsJeux INT ,
+        note INT,
+        id_lieu INT
+            FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
+    FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
+    FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
+);
+INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,1,1,6,5,2,3);
+INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,2,1,5,2,5,3);
+INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,3,1,8,3,1,3);
+INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,4,1,2,6,2,3);
+
 CREATE OR REPLACE VIEW V_match AS
 SELECT
   equipe.nom as Equipe,
