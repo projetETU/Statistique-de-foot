@@ -50,15 +50,17 @@ INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,p
 CREATE OR REPLACE VIEW V_match AS
 SELECT
   equipe.nom as Equipe,
-  competition.competition,
-  detailsMatch.but as But,
-  detailsMatch.cartonJ as Jaune,
-  detailsMatch.cartonR as Rouge,
-  detailsMatch.possesion,
-  detailsMatch.passeReussi as "Passe Reussi",
-  detailsMatch.aerienGagner as "Aerien Gagner",
-  detailsMatch.note
+  competition.competition as "Competitions",
+  SUM(detailsMatch.but) as But,
+  SUM(detailsMatch.cartonJ) as Jaune,
+  SUM(detailsMatch.cartonR) as Rouge,
+  AVG(detailsMatch.possesion) as "Possession",
+  AVG(detailsMatch.passeReussi) as "PasseReussi",
+  detailsMatch.aerienGagner as "AerienGagner",
+  AVG(detailsMatch.note) as "Note"
 FROM detailsMatch
 JOIN competition ON detailsMatch.id_competition = competition.id_competition
 JOIN equipe ON detailsMatch.id_equipe = equipe.id_equipe
-JOIN lieu ON detailsMatch.id_lieu = lieu.id_lieu;
+JOIN lieu ON detailsMatch.id_lieu = lieu.id_lieu
+GROUP BY equipe.nom,competition.competition
+;
