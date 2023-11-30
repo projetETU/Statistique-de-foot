@@ -51,16 +51,16 @@ CREATE OR REPLACE VIEW V_match AS
 SELECT
   equipe.nom as Equipe,
   competition.competition as "Competitions",
-  SUM(detailsMatch.but) as But,
-  SUM(detailsMatch.cartonJ) as Jaune,
-  SUM(detailsMatch.cartonR) as Rouge,
-  AVG(detailsMatch.possesion) as "Possession",
-  AVG(detailsMatch.passeReussi) as "PasseReussi",
-  detailsMatch.aerienGagner as "AerienGagner",
-  AVG(detailsMatch.note) as "Note"
-FROM detailsMatch
-JOIN competition ON detailsMatch.id_competition = competition.id_competition
-JOIN equipe ON detailsMatch.id_equipe = equipe.id_equipe
-JOIN lieu ON detailsMatch.id_lieu = lieu.id_lieu
+  SUM(detailsmatch.but) as But,
+  SUM(detailsmatch.cartonJ) as Jaune,
+  SUM(detailsmatch.cartonR) as Rouge,
+  AVG(detailsmatch.possesion) as "Possession",
+  AVG(detailsmatch.passeReussi) as "PasseReussi",
+  detailsmatch.aerienGagner as "AerienGagner",
+  AVG(detailsmatch.note) as "Note"
+FROM detailsmatch
+JOIN competition ON detailsmatch.id_competition = competition.id_competition
+JOIN equipe ON detailsmatch.id_equipe = equipe.id_equipe
+JOIN lieu ON detailsmatch.id_lieu = lieu.id_lieu
 GROUP BY equipe.nom,competition.competition
 ;
