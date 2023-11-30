@@ -33,36 +33,37 @@
 
       <div class="table-responsive">
 
-        <table class="table table-striped custom-table">
+        <table class="table table-striped custom-table" id="table">
           <thead>
-            <tr>
-              
-              <th scope="col">Order</th>
-              <th scope="col">Name</th>
-              <th scope="col">Occupation</th>
-              <th scope="col">Contact</th>
-              <th scope="col">Education</th>
-              <th scope="col"></th>
-            </tr>
           </thead>
           <tbody>
-            <tr scope="row">
-                      <td>
-                        1392
-                      </td>
-                      <td><a href="#">James Yates</a></td>
-                      <td>
-                        Web Designer
-                        <small class="d-block">Far far away, behind the word mountains</small>
-                      </td>
-                      <td>+63 983 0962 971</td>
-                      <td>NY University</td>            
-            </tr>            
           </tbody>
         </table>
       </div>
     </div>
   </div>
+  <script>
+fetch('http://localhost/stat/generals')
+  .then(response => response.json())
+  .then(data => {
+    const table = document.getElementById("table");
+    const head = table.querySelector('thead');
+    const tr = document.createElement("tr");
+
+    Object.keys(data[0]).forEach(titre => {
+       const th = document.createElement('th');
+       th.textContent = titre;
+       tr.appendChild(th); 
+    });
+
+    head.appendChild(tr);
+  })
+  .catch(error => {
+    console.error('Erreur lors de la récupération des données :', error);
+  });
+
+
+  </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
