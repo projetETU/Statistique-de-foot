@@ -91,15 +91,13 @@ GROUP BY equipe.nom,competition.competition
 ;
 CREATE OR REPLACE VIEW V_Defense AS
 SELECT
-  defense.id_defense,
-  matchfoot.id_matchfoot,
-  equipe.id_equipe,
-  competition.id_competition,
-  defense.tirspm,
-  defense.tacle,
-  defense.faute,
-  defense.horsJeux,
-  defense.note,
+  equipe.nom,
+  competition.competition as "Competitions",
+  defense.tirspm as "TirsPm",
+  defense.tacle as "TaclePm",
+  defense.faute as "Faute",
+  defense.horsJeux as "HorsJeux",
+  defense.note as "Note",
   lieu.id_lieu
 FROM defense
 JOIN matchfoot ON defense.id_matchfoot = matchfoot.id_matchfoot
