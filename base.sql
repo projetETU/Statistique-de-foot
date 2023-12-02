@@ -4,11 +4,14 @@ CREATE TABLE competition(
 );
 INSERT INTO competition(competition) VALUES ("LIGUE 1");
 INSERT INTO competition(competition) VALUES ("PREMIER LIGUE");
-CREATE TABLE match(
-    id_match INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE matchfoot(
+    id_matchfoot INT AUTO_INCREMENT PRIMARY KEY,
     id_competition INT ,
     FOREIGN KEY (id_competition) REFERENCES competition(id_competition)
 );
+INSERT INTO matchfoot(id_competition) VALUES (1);
+INSERT INTO matchfoot(id_competition) VALUES (2);
+
 CREATE TABLE equipe(
     id_equipe INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(20)
@@ -25,9 +28,9 @@ CREATE TABLE lieu(
 INSERT INTO lieu(lieu) VALUES ("DOMICILE");
 INSERT INTO lieu(lieu) VALUES ("EXTERIEUR");
 
-CREATE TABLE detailsMatch(
+CREATE TABLE detailsMatchfoot(
     id_details INT AUTO_INCREMENT PRIMARY KEY,
-    id_match INT ,
+    id_matchfoot INT ,
     id_competition INT ,
     id_equipe INT,
     but INT ,
@@ -38,18 +41,19 @@ CREATE TABLE detailsMatch(
     aerienGagner INT ,
     id_lieu INT ,
     note INT ,
+        FOREIGN KEY (id_matchfoot) REFERENCES matchfoot(id_matchfoot),
     FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
     FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
     FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
 );
-INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,1,2,4,1,54,43,12,1,6);
-INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,2,1,3,0,46,61,12,2,5);
-INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,3,2,4,1,54,43,12,1,6);
-INSERT INTO detailsMatch(id_match,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,4,1,3,0,46,61,12,2,5);
+INSERT INTO detailsMatchfoot(id_matchfoot,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,2,1,2,4,1,54,43,12,1,6);
+INSERT INTO detailsMatchfoot(id_matchfoot,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(2,2,2,5,3,0,46,61,12,2,5);
+INSERT INTO detailsMatchfoot(id_matchfoot,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,3,2,1,1,54,43,12,1,6);
+INSERT INTO detailsMatchfoot(id_matchfoot,id_competition,id_equipe,but,cartonJ,cartonR,possesion,passeReussi,aerienGagner,id_lieu,note) VALUES(1,1,4,1,2,0,46,61,12,2,5);
 
 CREATE TABLE defense(
         id_defense INT AUTO_INCREMENT PRIMARY KEY,
-        id_match INT ,
+        id_matchfoot INT ,
         id_equipe INT,
         id_competition INT ,
         tirspm INT ,
@@ -58,29 +62,47 @@ CREATE TABLE defense(
         horsJeux INT ,
         note INT,
         id_lieu INT,
+    FOREIGN KEY (id_matchfoot) REFERENCES matchfoot(id_matchfoot), 
     FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
     FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
     FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
 );
-INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,1,1,6,5,2,3);
-INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,2,1,5,2,5,3);
-INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,3,1,8,3,1,3);
-INSERT INTO defense(id_match,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note) VALUES (1,4,1,2,6,2,3);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,1,2,6,5,2,3,5,1);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,1,2,6,5,2,3,5,1);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,2,2,6,5,2,3,5,2);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,2,2,6,5,2,3,5,2);
 
-CREATE OR REPLACE VIEW V_match AS
+CREATE OR REPLACE VIEW V_Matchfoot AS
 SELECT
   equipe.nom as Equipe,
   competition.competition as "Competitions",
-  SUM(detailsmatch.but) as But,
-  SUM(detailsmatch.cartonJ) as Jaune,
-  SUM(detailsmatch.cartonR) as Rouge,
-  AVG(detailsmatch.possesion) as "Possession",
-  AVG(detailsmatch.passeReussi) as "PasseReussi",
-  detailsmatch.aerienGagner as "AerienGagner",
-  AVG(detailsmatch.note) as "Note"
-FROM detailsmatch
-JOIN competition ON detailsmatch.id_competition = competition.id_competition
-JOIN equipe ON detailsmatch.id_equipe = equipe.id_equipe
-JOIN lieu ON detailsmatch.id_lieu = lieu.id_lieu
+  SUM(detailsMatchfoot.but) as But,
+  SUM(detailsMatchfoot.cartonJ) as Jaune,
+  SUM(detailsMatchfoot.cartonR) as Rouge,
+  AVG(detailsMatchfoot.possesion) as "Possession",
+  AVG(detailsMatchfoot.passeReussi) as "PasseReussi",
+  detailsMatchfoot.aerienGagner as "AerienGagner",
+  AVG(detailsMatchfoot.note) as "Note"
+FROM detailsMatchfoot
+JOIN competition ON detailsMatchfoot.id_competition = competition.id_competition
+JOIN equipe ON detailsMatchfoot.id_equipe = equipe.id_equipe
+JOIN lieu ON detailsMatchfoot.id_lieu = lieu.id_lieu
 GROUP BY equipe.nom,competition.competition
 ;
+CREATE OR REPLACE VIEW V_Defense AS
+SELECT
+  defense.id_defense,
+  matchfoot.id_matchfoot,
+  equipe.id_equipe,
+  competition.id_competition,
+  defense.tirspm,
+  defense.tacle,
+  defense.faute,
+  defense.horsJeux,
+  defense.note,
+  lieu.id_lieu
+FROM defense
+JOIN matchfoot ON defense.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON defense.id_equipe = equipe.id_equipe
+JOIN competition ON defense.id_competition = competition.id_competition
+JOIN lieu ON defense.id_lieu = lieu.id_lieu;
