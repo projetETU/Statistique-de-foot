@@ -75,38 +75,6 @@
         });
     }
   });
-  document.getElementById('d').addEventListener('click',function () {
-    defense();
-    function defense() {
-      function generals(url = 'https://itu.alwaysdata.net/defenses') {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const table = document.getElementById("table");
-            const tbody = document.getElementById("data");
-            tbody.innerHTML = "";
-            const head = table.createTHead();
-            const tr = head.insertRow();
-            Object.keys(data[0]).forEach(titre => {
-                const th = document.createElement('th');
-                th.textContent = titre;
-                tr.appendChild(th);
-            });
-            for (let datas of data) {
-                const newRow = tbody.insertRow();
-                for (let key in datas) {
-                    const cell = newRow.insertCell();
-                    cell.textContent = datas[key];
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Erreur lors de la récupération des données :', error);
-        });
-}
-
-    }
-  });
 </script>
 
   </script>
