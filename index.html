@@ -19,8 +19,8 @@
     
     <div class="container">
       <h2 class="mb-5">EQUIPE</h2>
-      <button class="btn btn-primary" id="g" disabled>GENERALS</button>
-      <button class="btn btn-primary" id="d" disabled >DEFENSE</button>
+      <button class="btn btn-primary" id="g" >GENERALS</button>
+      <button class="btn btn-primary" id="d" >DEFENSE</button>
       <button class="btn btn-primary" id="a" >ATTACK</button>
 
       <div class="table-responsive">
@@ -38,7 +38,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     generals();
 
-    function generals(url = 'https://itu.alwaysdata.net/defenses') {
+    function generals(url = 'https://itu.alwaysdata.net/generals') {
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -57,11 +57,12 @@
               <tr>
                 <td>${datas.Equipe}</td>
                 <td>${datas.Competitions}</td>
-                <td>${datas.TirsPm}</td>
-                <td>${datas.TaclePm}</button></td>
-                <td>${datas.Faute}</button></td>
-                <td>${datas.HorsJeux} %</td>
+                <td>${datas.But}</td>
+                <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
+                <td><button class='btn btn-danger'disabled>${datas.Rouge}</button></td>
+                <td>${datas.Possession} %</td>
                 <td>${datas.PasseReussi} %</td>
+                <td>${datas.AerienGagner}</td>
                 <td>${datas.Note}</td>
               </tr>
             `;
@@ -74,9 +75,6 @@
         });
     }
   });
-  document.getElementById("d").addEventListener("click",function () {
-    window.location.href = "defenses.html";
-  })
 </script>
 
   </script>
