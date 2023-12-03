@@ -91,7 +91,7 @@ GROUP BY equipe.nom,competition.competition
 ;
 CREATE OR REPLACE VIEW V_Defense AS
 SELECT
-  equipe.nom,
+  equipe.nom as Equipe,
   competition.competition as "Competitions",
   defense.tirspm as "TirsPm",
   defense.tacle as "TaclePm",
