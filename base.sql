@@ -118,7 +118,7 @@ SELECT
   AVG(detailsMatchfoot.possesion) as "Possession",
   AVG(detailsMatchfoot.passeReussi) as "PasseReussi",
   detailsMatchfoot.aerienGagner as "AerienGagner",
-  AVG(detailsMatchfoot.note) as "Note"
+  ROUND(AVG(detailsMatchfoot.note), 2) as "Note"
 FROM detailsMatchfoot
 JOIN competition ON detailsMatchfoot.id_competition = competition.id_competition
 JOIN equipe ON detailsMatchfoot.id_equipe = equipe.id_equipe
@@ -158,3 +158,24 @@ JOIN equipe ON attaks.id_equipe = equipe.id_equipe
 JOIN competition ON attaks.id_competition = competition.id_competition
 JOIN lieu ON attaks.id_lieu = lieu.id_lieu
 GROUP BY equipe.nom, competition.competition;
+
+CREATE OR REPLACE VIEW V_MatchfootExterieur AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  SUM(detailsMatchfoot.but) as But,
+  SUM(detailsMatchfoot.cartonJ) as Jaune,
+  SUM(detailsMatchfoot.cartonR) as Rouge,
+  AVG(detailsMatchfoot.possesion) as "Possession",
+  AVG(detailsMatchfoot.passeReussi) as "PasseReussi",
+  detailsMatchfoot.aerienGagner as "AerienGagner",
+  ROUND(AVG(detailsMatchfoot.note), 2) as "Note"
+FROM detailsMatchfoot
+JOIN competition ON detailsMatchfoot.id_competition = competition.id_competition
+JOIN equipe ON detailsMatchfoot.id_equipe = equipe.id_equipe
+JOIN lieu ON detailsMatchfoot.id_lieu = lieu.id_lieu
+WHERE detailsMatchfoot.id_lieu = 2
+GROUP BY equipe.nom, competition.competition;
+
+
+

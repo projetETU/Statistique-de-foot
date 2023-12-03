@@ -77,7 +77,7 @@
                 `;
               }
               body.innerHTML = '';
-               head.innerHTML = '';
+        head.innerHTML = '';
               body.innerHTML = out;
               head.appendChild(tr);
             })
@@ -86,11 +86,23 @@
             });
         }
         const defaultDomicileUrl = 'https://itu.alwaysdata.net/generals/domicile';
+        const defaultExteUrl = 'https://itu.alwaysdata.net/generals/exterieur';
+
         const domicileButton = document.getElementById('domicile');
         domicileButton.dataset.url = defaultDomicileUrl;
         domicileButton.addEventListener('click', function () { 
           generals(domicileButton.dataset.url);
         });
+
+        const ext = document.getElementById("exterieur");
+        ext.dataset.url = defaultExteUrl;
+
+        ext.addEventListener('click',function () {
+          generals(ext.dataset.url);
+        })
+        document.getElementById('generals').addEventListener('click',function () {
+          window.location.reload();
+        })
           document.getElementById("d").addEventListener("click", function () {
           window.location.href = "defenses.html";
         });
