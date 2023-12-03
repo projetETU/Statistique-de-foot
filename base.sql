@@ -67,10 +67,29 @@ CREATE TABLE defense(
     FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
     FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
 );
-INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,1,2,6,5,2,3,5,1);
-INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,1,2,6,5,2,3,5,1);
-INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,2,2,6,5,2,3,5,2);
-INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,2,2,6,5,2,3,5,2);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,3,1,3,2,2,3,5,1);
+INSERT INTO defense(id_matchfoot,id_equipe,id_competition,tirspm,tacle,faute,horsJeux,note,id_lieu) VALUES (1,4,1,4,5,2,3,5,1);
+
+CREATE TABLE attaks(
+        id_attaks INT AUTO_INCREMENT PRIMARY KEY,
+        id_matchfoot INT ,
+        id_equipe INT,
+        id_competition INT ,
+        tirspm INT ,
+        tirsCApm INT ,
+        driblepm INT ,
+        fauteSubitpm INT ,
+        note INT,
+        id_lieu INT,
+    FOREIGN KEY (id_matchfoot) REFERENCES matchfoot(id_matchfoot), 
+    FOREIGN KEY (id_competition) REFERENCES competition(id_competition),
+    FOREIGN KEY (id_equipe) REFERENCES equipe(id_equipe),
+    FOREIGN KEY (id_lieu) REFERENCES lieu(id_lieu)
+);
+INSERT INTO attaks(id_matchfoot,id_equipe,id_competition,tirspm,tirsCApm,driblepm,fauteSubitpm,Note,id_lieu) VALUES (1,1,1,5,3,5,5,4,1);
+INSERT INTO attaks(id_matchfoot,id_equipe,id_competition,tirspm,tirsCApm,driblepm,fauteSubitpm,Note,id_lieu) VALUES (1,2,1,6,2,5,6,4,2);
+INSERT INTO attaks(id_matchfoot,id_equipe,id_competition,tirspm,tirsCApm,driblepm,fauteSubitpm,Note,id_lieu) VALUES (2,3,2,5,3,5,5,4,2);
+INSERT INTO attaks(id_matchfoot,id_equipe,id_competition,tirspm,tirsCApm,driblepm,fauteSubitpm,Note,id_lieu) VALUES (2,4,2,6,2,5,6,4,1);
 
 CREATE OR REPLACE VIEW V_Matchfoot AS
 SELECT
@@ -93,14 +112,31 @@ CREATE OR REPLACE VIEW V_Defense AS
 SELECT
   equipe.nom as Equipe,
   competition.competition as "Competitions",
-  defense.tirspm as "TirsPm",
-  defense.tacle as "TaclePm",
-  defense.faute as "Faute",
-  defense.horsJeux as "HorsJeux",
-  defense.note as "Note",
-  lieu.id_lieu
+  ROUND(AVG(defense.tirspm), 1) as "TirsPm",
+  ROUND(AVG(defense.tacle), 1) as "TaclePm",
+  ROUND(AVG(defense.faute), 1) as "Faute",
+  ROUND(AVG(defense.horsJeux), 1) as "HorsJeux",
+  ROUND(AVG(defense.note), 2) as "Note"
 FROM defense
 JOIN matchfoot ON defense.id_matchfoot = matchfoot.id_matchfoot
 JOIN equipe ON defense.id_equipe = equipe.id_equipe
 JOIN competition ON defense.id_competition = competition.id_competition
-JOIN lieu ON defense.id_lieu = lieu.id_lieu;
+JOIN lieu ON defense.id_lieu = lieu.id_lieu
+GROUP BY equipe.nom, competition.competition;
+
+
+CREATE OR REPLACE VIEW V_Attaks AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  ROUND(AVG(attaks.tirspm), 1) as "TirsPm",
+  ROUND(AVG(attaks.tirsCApm), 1) as "TirsCAPm",
+  ROUND(AVG(attaks.driblepm), 1) as "DriblePm",
+  ROUND(AVG(attaks.fauteSubitpm), 1) as "FauteSubitPm",
+  ROUND(AVG(attaks.note), 2) as "Note"
+FROM attaks
+JOIN matchfoot ON attaks.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON attaks.id_equipe = equipe.id_equipe
+JOIN competition ON attaks.id_competition = competition.id_competition
+JOIN lieu ON attaks.id_lieu = lieu.id_lieu
+GROUP BY equipe.nom, competition.competition;

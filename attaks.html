@@ -1,1 +1,91 @@
-Tsy misy eh
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+   <link rel="stylesheet" href="css/style.css">
+
+    <title>Statistique Foot ITU</title>
+  </head>
+  <body>
+  <div class="content">
+    
+    <div class="container">
+      <h2 class="mb-5">EQUIPE</h2>
+      <button class="btn btn-primary" id="g" disabled >GENERALS</button>
+      <button class="btn btn-primary" id="d" >DEFENSE</button>
+      <button class="btn btn-primary" id="a" disabled>ATTACK</button>
+
+      <div class="table-responsive">
+
+        <table class="table table-striped custom-table" id="table">
+          <thead>
+          </thead>
+          <tbody id="data">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    generals();
+
+    function generals(url = 'https://itu.alwaysdata.net/attacks') {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          const table = document.getElementById("table");
+          const head = table.querySelector('thead');
+          const tr = document.createElement("tr");
+          Object.keys(data[0]).forEach(titre => {
+            const th = document.createElement('th');
+            th.textContent = titre;
+            tr.appendChild(th);
+          });
+          const body = document.querySelector('#data');
+          let out = "";
+          for (let datas of data) {
+            out += `
+              <tr>
+                <td>${datas.Equipe}</td>
+                <td>${datas.Competitions}</td>
+                <td>${datas.TirsPm}</td>
+                <td>${datas.TirsCAPm}</button></td>
+                <td>${datas.DriblePm}</button></td>
+                <td>${datas.FauteSubitPm} %</td>
+                <td>${datas.Note} %</td>
+              </tr>
+            `;
+          }
+          body.innerHTML = out;
+          head.appendChild(tr);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la récupération des données :', error);
+        });
+    }
+  });
+  document.getElementById("g").addEventListener("click",function () {
+    window.location.href = "index.html";
+  })
+  document.getElementById("d").addEventListener("click",function () {
+    window.location.href = "defenses.html";
+  })
+
+</script>
+
+  </script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
