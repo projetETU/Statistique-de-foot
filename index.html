@@ -40,10 +40,13 @@
       </div>
       
       <script>
+      function supprimer(id) {
+        const element = document.getElementById(id);
+        var cont = element.parentNode;    
+        cont.removeChild(element);
+      }
       document.addEventListener("DOMContentLoaded", function () {
-        // Appel initial avec l'URL par défaut
-        generals();
-      
+        generals();      
         function generals(url = 'https://itu.alwaysdata.net/generals') {
           fetch(url)
             .then(response => response.json())
@@ -83,7 +86,8 @@
         const defaultDomicileUrl = 'https://itu.alwaysdata.net/generals/domicile';
         const domicileButton = document.getElementById('domicile');
         domicileButton.dataset.url = defaultDomicileUrl;
-        domicileButton.addEventListener('click', function () {
+        domicileButton.addEventListener('click', function () { 
+          supprimer("table");         
           generals(domicileButton.dataset.url);
         });
           document.getElementById("d").addEventListener("click", function () {
