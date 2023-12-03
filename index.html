@@ -27,9 +27,8 @@
       <button class="btn btn-sm btn-success" id="generals">Generals</button>
       <button class="btn btn-sm btn-success" id="domicile">Domicile</button>
       <button class="btn btn-sm btn-success" id="exterieur">Exterieur</button>
-
+      
       <div class="table-responsive">
-
         <table class="table table-striped custom-table" id="table">
           <thead>
           </thead>
@@ -37,67 +36,66 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    generals();
-
-    function generals(url = 'https://itu.alwaysdata.net/generals') {
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          const table = document.getElementById("table");
-          const head = table.querySelector('thead');
-          const tr = document.createElement("tr");
-          Object.keys(data[0]).forEach(titre => {
-            const th = document.createElement('th');
-            th.textContent = titre;
-            tr.appendChild(th);
-          });
-          const body = document.querySelector('#data');
-          let out = "";
-          for (let datas of data) {
-            out += `
-              <tr>
-                <td>${datas.Equipe}</td>
-                <td>${datas.Competitions}</td>
-                <td>${datas.But}</td>
-                <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
-                <td><button class='btn btn-danger'disabled>${datas.Rouge}</button></td>
-                <td>${datas.Possession} %</td>
-                <td>${datas.PasseReussi} %</td>
-                <td>${datas.AerienGagner}</td>
-                <td>${datas.Note}</td>
-              </tr>
-            `;
-          }
-          body.innerHTML = out;
-          head.appendChild(tr);
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des données :', error);
+      </div>
+      </div>
+      
+      <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Appel initial avec l'URL par défaut
+        generals();
+      
+        function generals(url = 'https://itu.alwaysdata.net/generals') {
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              const table = document.getElementById("table");
+              const head = table.querySelector('thead');
+              const tr = document.createElement("tr");
+              Object.keys(data[0]).forEach(titre => {
+                const th = document.createElement('th');
+                th.textContent = titre;
+                tr.appendChild(th);
+              });
+              const body = document.querySelector('#data');
+              let out = "";
+              for (let datas of data) {
+                out += `
+                  <tr>
+                    <td>${datas.Equipe}</td>
+                    <td>${datas.Competitions}</td>
+                    <td>${datas.But}</td>
+                    <td><button class='btn btn-warning' disabled>${datas.Jaune}</button></td>
+                    <td><button class='btn btn-danger' disabled>${datas.Rouge}</button></td>
+                    <td>${datas.Possession} %</td>
+                    <td>${datas.PasseReussi} %</td>
+                    <td>${datas.AerienGagner}</td>
+                    <td>${datas.Note}</td>
+                  </tr>
+                `;
+              }
+              body.innerHTML = out;
+              head.appendChild(tr);
+            })
+            .catch(error => {
+              console.error('Erreur lors de la récupération des données :', error);
+            });
+        }
+        const defaultDomicileUrl = 'https://itu.alwaysdata.net/generals/domicile';
+        const domicileButton = document.getElementById('domicile');
+        domicileButton.dataset.url = defaultDomicileUrl;
+        domicileButton.addEventListener('click', function () {
+          generals(domicileButton.dataset.url);
         });
-    }
-  });
-  const url = 'https://itu.alwaysdata.net/generals/domicile';
-  const dom =  document.getElementById("domicile").dataset.url = url;
-  document.getElementById('domicile').addEventListener('click',function () {
-    generals(dom.dataset.url);
-  })
-
-  document.getElementById("d").addEventListener("click",function () {
-    window.location.href = "defenses.html";
-  })
-  document.getElementById("a").addEventListener("click",function () {
-    window.location.href = "attaks.html";
-  })
-
-</script>
-
-  </script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
+          document.getElementById("d").addEventListener("click", function () {
+          window.location.href = "defenses.html";
+        });
+          document.getElementById("a").addEventListener("click", function () {
+          window.location.href = "attaks.html";
+        });
+      });
+      </script>
+      <script src="js/jquery-3.3.1.min.js"></script>
+          <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
   </body>
