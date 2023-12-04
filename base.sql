@@ -179,3 +179,68 @@ GROUP BY equipe.nom, competition.competition;
 
 
 
+CREATE OR REPLACE VIEW V_AttaksD AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  ROUND(AVG(attaks.tirspm), 1) as "TirsPm",
+  ROUND(AVG(attaks.tirsCApm), 1) as "TirsCAPm",
+  ROUND(AVG(attaks.driblepm), 1) as "DriblePm",
+  ROUND(AVG(attaks.fauteSubitpm), 1) as "FauteSubitPm",
+  ROUND(AVG(attaks.note), 2) as "Note"
+FROM attaks
+JOIN matchfoot ON attaks.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON attaks.id_equipe = equipe.id_equipe
+JOIN competition ON attaks.id_competition = competition.id_competition
+JOIN lieu ON attaks.id_lieu = lieu.id_lieu
+WHERE attaks.id_lieu = 1 
+GROUP BY equipe.nom, competition.competition;
+CREATE OR REPLACE VIEW V_AttakseE AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  ROUND(AVG(attaks.tirspm), 1) as "TirsPm",
+  ROUND(AVG(attaks.tirsCApm), 1) as "TirsCAPm",
+  ROUND(AVG(attaks.driblepm), 1) as "DriblePm",
+  ROUND(AVG(attaks.fauteSubitpm), 1) as "FauteSubitPm",
+  ROUND(AVG(attaks.note), 2) as "Note"
+FROM attaks
+JOIN matchfoot ON attaks.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON attaks.id_equipe = equipe.id_equipe
+JOIN competition ON attaks.id_competition = competition.id_competition
+JOIN lieu ON attaks.id_lieu = lieu.id_lieu
+WHERE attaks.id_lieu = 12
+GROUP BY equipe.nom, competition.competition;
+
+CREATE OR REPLACE VIEW V_DefenseD AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  ROUND(AVG(defense.tirspm), 1) as "TirsPm",
+  ROUND(AVG(defense.tacle), 1) as "TaclePm",
+  ROUND(AVG(defense.faute), 1) as "Faute",
+  ROUND(AVG(defense.horsJeux), 1) as "HorsJeux",
+  ROUND(AVG(defense.note), 2) as "Note"
+FROM defense
+JOIN matchfoot ON defense.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON defense.id_equipe = equipe.id_equipe
+JOIN competition ON defense.id_competition = competition.id_competition
+JOIN lieu ON defense.id_lieu = lieu.id_lieu
+WHERE defense.id_lieu = 1
+GROUP BY equipe.nom, competition.competition;
+CREATE OR REPLACE VIEW V_DefenseE AS
+SELECT
+  equipe.nom as Equipe,
+  competition.competition as "Competitions",
+  ROUND(AVG(defense.tirspm), 1) as "TirsPm",
+  ROUND(AVG(defense.tacle), 1) as "TaclePm",
+  ROUND(AVG(defense.faute), 1) as "Faute",
+  ROUND(AVG(defense.horsJeux), 1) as "HorsJeux",
+  ROUND(AVG(defense.note), 2) as "Note"
+FROM defense
+JOIN matchfoot ON defense.id_matchfoot = matchfoot.id_matchfoot
+JOIN equipe ON defense.id_equipe = equipe.id_equipe
+JOIN competition ON defense.id_competition = competition.id_competition
+JOIN lieu ON defense.id_lieu = lieu.id_lieu
+WHERE defense.id_lieu = 2
+GROUP BY equipe.nom, competition.competition;
